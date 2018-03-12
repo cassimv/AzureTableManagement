@@ -1,0 +1,31 @@
+﻿@model List <AzureTablesModel.CustomerEntity>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Azure Table Storage</h1>
+</div>
+<div>
+    @Html.ActionLink("Add Customer", "AddCustomer", "Home")
+</div>
+<br/>
+<br/>
+<table class="table table-bordered table-striped">
+<tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email Name</th>
+    <th>Phone Number</th>
+
+</tr>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.PartitionKey</td>
+        <td>@item.RowKey</td>
+        <td>@item.Email</td>
+        <td>@item.PhoneNumber</td>
+    </tr>
+}
+</table>

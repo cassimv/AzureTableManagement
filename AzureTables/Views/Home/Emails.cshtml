@@ -1,0 +1,18 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "Emails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Emails</h2>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Email Name</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item</td>
+        </tr>
+    }
+</table>

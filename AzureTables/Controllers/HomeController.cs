@@ -15,6 +15,12 @@ namespace AzureTablesDemo.Controllers
             return View(tablebusiness.GetAllCustomers("customer"));
         }
 
+        public ActionResult Emails()
+        {
+            var tablebusiness = new AzureTablesBusiness.AzureTablesBusiness();
+            return View(tablebusiness.GetCustomerEmails("customer"));
+        }
+
         public async Task<ActionResult> IndexAsync()
         {
             var tablebusiness = new AzureTablesBusiness.AzureTablesBusiness();

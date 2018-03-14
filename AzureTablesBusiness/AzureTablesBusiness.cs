@@ -27,6 +27,28 @@ namespace AzureTablesBusiness
 
             return returnlist;
         }
+
+        //Only return specific properties
+        public List<string> GetCustomerEmails(string tableName)
+        {
+            CloudTable table = GetTableReference(tableName);
+            // Define the query, and select only the Email property. 
+            
+            //Specify you just want a property called email
+            TableQuery<DynamicTableEntity> projectionQuery = new TableQuery<DynamicTableEntity>().Select(new string[] { "Email" });
+
+            //Run a query for specific data
+            //TableQuery<DynamicTableEntity> projectionQuery = new TableQuery<DynamicTableEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Cassim"));
+
+            // Define an entity resolver to work with the entity after retrieval. 
+            EntityResolver<string> resolver = (pk, rk, ts, props, etag) => props.ContainsKey("Email") ? props["Email"].StringValue : null;
+
+            var returnlist = table.ExecuteQuery(projectionQuery, resolver, null, null);
+
+            return new List<string>(returnlist);
+        }
+
+        //Get all customers but run Async
         public async Task<List<CustomerEntity>> GetAllCustomersAsync(string tableName)
         {
             var table = GetTableReference(tableName);

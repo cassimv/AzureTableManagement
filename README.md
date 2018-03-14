@@ -1,7 +1,7 @@
-# AzureBlobManagement
+# AzureTableManagement
 For Course Application Development 3
 
-Showing Blob Management In Azure:
+Showing Table Management In Azure:
 
-1) This application demonstrates how to interact with Azure Blob Storage.
-2) The application provides code to list blob and upload blobs
+1) This application demonstrates how to interact with Azure Table Storage.
+2) The application provides code to data in a table and to insert data into a table

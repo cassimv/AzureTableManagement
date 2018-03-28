@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AzureTablesModel;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace AzureTablesBusiness
@@ -35,13 +34,16 @@ namespace AzureTablesBusiness
             // Define the query, and select only the Email property. 
             
             //Specify you just want a property called email
-            TableQuery<DynamicTableEntity> projectionQuery = new TableQuery<DynamicTableEntity>().Select(new string[] { "Email" });
+            TableQuery<DynamicTableEntity> projectionQuery = new TableQuery<DynamicTableEntity>().Select(new string[] { "FirstName, Email" });
 
             //Run a query for specific data
             //TableQuery<DynamicTableEntity> projectionQuery = new TableQuery<DynamicTableEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Cassim"));
 
             // Define an entity resolver to work with the entity after retrieval. 
-            EntityResolver<string> resolver = (pk, rk, ts, props, etag) => props.ContainsKey("Email") ? props["Email"].StringValue : null;
+            // Used for converting directly from table entity data to a client object type without requiring a separate table entity class type that deserializes every property individually
+            // This is a delegate function.
+            EntityResolver<string> resolver = (pk, rk, ts, props, etag) =>
+                $"{props["FirstName"].StringValue},{props["Email"].StringValue}";
 
             var returnlist = table.ExecuteQuery(projectionQuery, resolver, null, null);
 

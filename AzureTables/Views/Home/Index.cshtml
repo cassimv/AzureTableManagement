@@ -1,5 +1,7 @@
-﻿@model List <AzureTablesModel.CustomerEntity>
+﻿@model List<AzureTablesModel.CustomerEntity>
 @{
+    /**/
+
     ViewBag.Title = "Home Page";
 }
 
@@ -12,23 +14,48 @@
     @Html.ActionLink("Emails", "Emails", "Home")
 
 </div>
-<br/>
-<br/>
-<table class="table table-bordered table-striped">
-<tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email Name</th>
-    <th>Phone Number</th>
-
-</tr>
-@foreach (var item in Model)
+<br />
+<br />
+@using (Html.BeginForm("SearchCustomer", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    <tr>
-        <td>@item.PartitionKey</td>
-        <td>@item.RowKey</td>
-        <td>@item.Email</td>
-        <td>@item.PhoneNumber</td>
-    </tr>
+    <div class="form-group">
+        Search: <input id="name" name="name" type="text" class="form-control" />
+        <span id="error" style="color:red;"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-default" />
+    </div>
 }
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email Name</th>
+        <th>Phone Number</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.PartitionKey</td>
+            <td>@item.RowKey</td>
+            <td>@item.Email</td>
+            <td>@item.PhoneNumber</td>
+        </tr>
+    }
 </table>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#name").focusout(function () {
+                if ($(this).val() == "") {
+                    $("#error").text('Search cannot be blank');
+                    $("#name").focusin();
+                }
+                else {
+                    $("#error").text('');
+                }
+            });
+        });
+    </script>
+}

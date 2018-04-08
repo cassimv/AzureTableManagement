@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using AzureTablesModel;
 using Microsoft.Azure;
@@ -50,6 +51,18 @@ namespace AzureTablesBusiness
             return new List<string>(returnlist);
         }
 
+        public List<CustomerEntity> GetCustomerByName (string tableName, string name)
+        {
+
+            var table = GetTableReference(tableName);
+
+            var query = (from client in table.CreateQuery<CustomerEntity>().Execute()
+                         where client.PartitionKey.Contains(name)
+                         select client);
+
+            return new List<CustomerEntity>(query);
+        }
+
         //Get all customers but run Async
         public async Task<List<CustomerEntity>> GetAllCustomersAsync(string tableName)
         {
@@ -92,15 +105,10 @@ namespace AzureTablesBusiness
             // Execute the insert operation.
             table.Execute(insertOperation);
         }
-
+        
         private static CloudTable GetTableReference(string tablename)
         {
-            // Retrieve storage account from connection string.
-            var storageAccount = CloudStorageAccount.Parse(
-                CloudConfigurationManager.GetSetting("StorageConnectionString"));
-
-            // Create the blob client.
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            CloudTableClient tableClient = GetContext();
 
             // Retrieve reference to a previously created container.
             var table = tableClient.GetTableReference(tablename);
@@ -109,6 +117,17 @@ namespace AzureTablesBusiness
             table.CreateIfNotExists();
 
             return table;
+        }
+
+        private static CloudTableClient GetContext()
+        {
+            // Retrieve storage account from connection string.
+            var storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            // Create the blob client.
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            return tableClient;
         }
     }
 

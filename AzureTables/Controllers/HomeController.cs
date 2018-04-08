@@ -24,7 +24,7 @@ namespace AzureTablesDemo.Controllers
         public async Task<ActionResult> IndexAsync()
         {
             var tablebusiness = new AzureTablesBusiness.AzureTablesBusiness();
-            return View("Index",await tablebusiness.GetAllCustomersAsync("customer"));
+            return View("Index", await tablebusiness.GetAllCustomersAsync("customer"));
         }
 
         public ActionResult AddCustomer()
@@ -40,6 +40,18 @@ namespace AzureTablesDemo.Controllers
             {
                 var AzureTable = new AzureTablesBusiness.AzureTablesBusiness();
                 AzureTable.InsertCustomer("customer", customer);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult SearchCustomer(string name)
+        {
+            if ((ModelState.IsValid) && (!string.IsNullOrEmpty(name)))
+            {
+                var AzureTable = new AzureTablesBusiness.AzureTablesBusiness();
+                return View("Index", AzureTable.GetCustomerByName("customer", name));
             }
 
             return RedirectToAction("Index");

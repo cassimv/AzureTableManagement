@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobDemo", "AzureTables\AzureTablesDemo.csproj", "{63533736-0DE1-4D9A-8119-C72BD516B2F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTablesDemo", "AzureTables\AzureTablesDemo.csproj", "{63533736-0DE1-4D9A-8119-C72BD516B2F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobBusiness", "AzureTablesBusiness\AzureTablesBusiness.csproj", "{EA105EBC-E78B-45F8-A083-3FC5752C48C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTablesBusiness", "AzureTablesBusiness\AzureTablesBusiness.csproj", "{EA105EBC-E78B-45F8-A083-3FC5752C48C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\AzureTablesModel.csproj", "{B0992026-6704-491C-BDA3-06824C66B7D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTablesModel", "ViewModel\AzureTablesModel.csproj", "{B0992026-6704-491C-BDA3-06824C66B7D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
